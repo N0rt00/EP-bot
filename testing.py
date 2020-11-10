@@ -18,6 +18,7 @@ def listToString(s):
     return (str1.join(s)) 
 driver = webdriver.Chrome('/Users/samthornton/chromedriver')
 driver.get("https://www.educationperfect.com/app/#/dashboard/french/")
+time.sleep(1)
 inputElement = driver.find_element_by_id("login-username")
 inputElement.send_keys('WHSTHO0065')
 inputElement = driver.find_element_by_id("login-password")
@@ -25,9 +26,9 @@ inputElement.send_keys('Bl0cks#French')
 inputElement.send_keys(Keys.ENTER)
 time.sleep(10)
 driver.find_element_by_id('start-button-main-label').click()
-print('done')
+print('started task')
 time.sleep(2)
-for i in range(1):
+for i in range(10):
     im = ImageGrab.grab()
     im.save('fullscreen.png')
     im = Image.open ('fullscreen.png')
@@ -53,6 +54,12 @@ for i in range(1):
     if lang_to == 'French':
         lang_to = 'fr'
     print (lang_to)
-    #translation is not working
+    print ('starting traslation')
     translation = translator.translate(word)
     print (translation.text)
+    send = translation.text
+    print (send)
+    print ('set send to value')
+    answer_box = driver.find_element_by_css_selector('#answer-text-container > #answer-text')
+    answer_box.send_keys(send)
+    driver.find_element_by_id('submit-button').click()
