@@ -16,13 +16,13 @@ bottom = 1500
 def listToString(s):  
     str1 = " " 
     return (str1.join(s)) 
-driver = webdriver.Chrome('/Users/samthornton/chromedriver')
+driver = webdriver.Chrome('path to chrome driver')
 driver.get("https://www.educationperfect.com/app/#/dashboard/french/")
 time.sleep(1)
 inputElement = driver.find_element_by_id("login-username")
-inputElement.send_keys('WHSTHO0065')
+inputElement.send_keys('put your username here')
 inputElement = driver.find_element_by_id("login-password")
-inputElement.send_keys('Bl0cks#French')
+inputElement.send_keys('put your password here')
 inputElement.send_keys(Keys.ENTER)
 time.sleep(10)
 driver.find_element_by_id('start-button-main-label').click()
