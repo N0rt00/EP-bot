@@ -89,7 +89,7 @@ url = driver.current_url
 print("https://www.educationperfect.com/app/#/dashboard/" + language + "/")
 while url == "https://www.educationperfect.com/app/#/dashboard/" + language + "/":
     url = driver.current_url
-print("Open Your Task Within The Next 15 Seconds")
+print("Open Your Task Within The Next 20 Seconds")
 time.sleep(17)
 print("3...")
 time.sleep(1)
