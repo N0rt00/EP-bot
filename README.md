@@ -10,50 +10,13 @@ python3 -m pip install Pillow pyscreenshot
 
 
 # VoidsGod's Code:
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-
-print("Enter Your Language:")
-language = input()
-driver = webdriver.Chrome()
-import time
-
-driver.get("https://www.educationperfect.com/app/#/login")
-
-time.sleep(3)
-
-email = driver.find_element(By.ID, 'login-username')
-password = driver.find_element(By.ID, 'login-password')
-logInButton = driver.find_element(By.ID, 'login-submit-button')
-email.send_keys("WHSFRI0011")
-password.send_keys("Fox.3829")
-logInButton.click()
-time.sleep(4)
-print(language)
-driver.get("https://www.educationperfect.com/app/#/dashboard/" + language + "/");
-url = driver.current_url
-print("https://www.educationperfect.com/app/#/dashboard/" + language + "/")
-while url == "https://www.educationperfect.com/app/#/dashboard/" + language + "/":
-    url = driver.current_url
-print("Open Your Task Within The Next 15 Seconds")
-time.sleep(12)
-print("3...")
-time.sleep(1)
-print("2...")
-time.sleep(1)
-print("1...")
-time.sleep(1)
-print("Starting Script")
-
-
-# Break 
-
-
 from PIL import Image
 import pyscreenshot as ImageGrab
 import time
 import pytesseract
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
 
 li1 = 1
 li12 = 1
@@ -104,3 +67,34 @@ try:
     list2 = li2 + li22
 except:
     list2 = li2
+
+print("Enter Your Language:")
+language = input()
+
+driver = webdriver.Chrome()
+driver.get("https://www.educationperfect.com/app/#/login")
+
+time.sleep(3)
+
+email = driver.find_element(By.ID, 'login-username')
+password = driver.find_element(By.ID, 'login-password')
+logInButton = driver.find_element(By.ID, 'login-submit-button')
+email.send_keys("WHSFRI0011")
+password.send_keys("Fox.3829")
+logInButton.click()
+time.sleep(4)
+print(language)
+driver.get("https://www.educationperfect.com/app/#/dashboard/" + language + "/");
+url = driver.current_url
+print("https://www.educationperfect.com/app/#/dashboard/" + language + "/")
+while url == "https://www.educationperfect.com/app/#/dashboard/" + language + "/":
+    url = driver.current_url
+print("Open Your Task Within The Next 15 Seconds")
+time.sleep(17)
+print("3...")
+time.sleep(1)
+print("2...")
+time.sleep(1)
+print("1...")
+time.sleep(1)
+print("Starting Script")
