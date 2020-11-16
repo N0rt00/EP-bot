@@ -5,7 +5,6 @@ import pytesseract
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-pytesseract.pytesseract.tesseract_cmd = '/usr/local/Cellar/tesseract/4.1.1/bin/tesseract'
 li1 = 1
 li12 = 1
 li2 = 1
@@ -72,8 +71,8 @@ time.sleep(3)
 email = driver.find_element(By.ID, 'login-username')
 password = driver.find_element(By.ID, 'login-password')
 logInButton = driver.find_element(By.ID, 'login-submit-button')
-email.send_keys("WHSTHO0065")
-password.send_keys("Bl0cks#French")
+email.send_keys("username")
+password.send_keys("password")
 logInButton.click()
 time.sleep(4)
 print(language)
