@@ -1,4 +1,4 @@
-vinputList = """
+inputList = """
 French English
 avril April
 dimanche Sunday
