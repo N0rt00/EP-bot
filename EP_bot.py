@@ -1,5 +1,4 @@
 inputList = """
-French English
 avril April
 dimanche Sunday
 février February
@@ -92,16 +91,36 @@ print("Go To Task")
 while 1 == 1:
     if 'game?task=' in driver.current_url:
         break
+# Answers Questions
 while 1 == 1:
     time.sleep(0.1)
-    textinput = driver.find_element_by_xpath("/html[1]/body[1]/div[1]/div[2]/div[1]/ui-view[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/div[2]/span[2]/span[1]").text
+    inputElement = driver.find_elements_by_xpath("//span[@id='question-text']")
+    text = ''
+    for i in inputElement:
+        text = i.text
+    textinput = text
     current = 0
+    new = ''
+    letter = ''
+    if "(starts with" in textinput:
+        letter = textinput.split("starts with \"")[1][0]
+        textinput = textinput.replace(" (starts with \""+letter+"\")", "")
+    if ',' in textinput:
+        textinput = textinput.replace(',', ';')
+    print(textinput)
     for i in inputList:
         if textinput in i:
-            new = inputList[current].replace(textinput, '')
-            break;
+            v = inputList[current].replace(textinput, '')
+            if v[0] == letter or letter == '':
+                new = v
+            elif v[0] == '' and v[1] == letter:
+                new = v
+            break
         current += 1
-    userinput = driver.find_element_by_xpath("//input[@id='answer-text']")
-    userinput.send_keys(new)
-    userinput = driver.find_element_by_xpath("//button[@id='submit-button']")
-    userinput.click()
+    if ';' in new:
+        new = new.split(';')[0]
+    if new != '':
+        userinput = driver.find_element_by_xpath("//input[@id='answer-text']")
+        userinput.send_keys(new)
+        userinput = driver.find_element_by_xpath("//button[@id='submit-button']")
+        userinput.click()
