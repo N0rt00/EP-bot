@@ -1,118 +1,107 @@
-from PIL import Image
-import pyscreenshot as ImageGrab
-import time
-import pytesseract
+vinputList = """
+French English
+avril April
+dimanche Sunday
+février February
+juin June
+mardi Tuesday
+mars March
+le soir evening
+septembre September
+janvier January
+octobre October
+novembre November
+l'après-midi afternoon
+le midi midday
+l'hiver Winter
+l'été Summer
+le français French
+l'éducation musicale Music
+la cour de récréation playground
+la cantine canteen
+les mathématiques; les maths Maths; mathematics
+le printemps Spring
+août August
+décembre December
+les sciences Science
+l'art dramatique Drama
+le cours class
+jeudi Thursday
+vendredi Friday
+demain tomorrow
+une minute a minute
+la salle de classe classroom
+l'anglais English
+juillet July
+le matin morning
+lundi Monday
+mai May
+mercredi Wednesday
+l'école school; the school
+aujourd'hui today
+une heure an hour
+un élève; une élève student
+le collège middle school
+la bibliothèque library
+les arts plastiques Art
+la technologie Technology
+le gymnase gymnasium
+samedi Saturday
+les matières subjects
+l'automne Autumn
+le professeur; le prof male teacher
+la vie de classe homegroup lesson
+la menuiserie Woodwork
+la horticulture Horticulture
+Il est quelle heure? What's the time?
+la note score; mark; grade
+quelle heure est-il? What's the time?; What time is it?; What is the time?
+Il est vingt heures It"s 8pm; It is 8pm
+Il est huit heures moins le quart It's a quarter to 8; It is quarter to 8
+un collégien male student
+une collégienne female student
+l'EPS Physical Education; PE
+l'histoire-géographie Hums; humanities
+la professeure; la prof female teacher
+le terrain de sport sports oval; sports field
+Dans mon collège il y a un gym In my school there's a gym; In my school there is a gym
+Dans mon collège il y a une cantine In my school there's a canteen; In my school there is a canteen
+dans mon collège il y a un terrain de sport in my school there's a sports ground; in my school there is a sport ground
+Dans mon collège il y a un terrain de foot In my school there is a football ground; In my school there's a footy ground
+Dans mon collège il y a un terrain de tennis In my school there's a tennis court; In my school there is a tennis court
+"""
+
+inputList = inputList.splitlines()
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-li1 = 1
-li12 = 1
-li2 = 1
-li22 = 1
-left = 400
-top =  1000
-right = 2500
-bottom = 1500
-list1 = pytesseract.image_to_string(Image.open("list1.png"))
-try:
-    list12 = pytesseract.image_to_string(Image.open("list12.png"))
-except:
-    print("")
-list2 = pytesseract.image_to_string(Image.open("list2.png"))
-try:
-    list22 = pytesseract.image_to_string(Image.open("list22.png"))
-except:
-    print("")
+import time
 
-def table(listName, listPic):
-    listName = []
-    listName = listPic.split("\n")
-    listName = [x for x in listName if x]
-    listName = listName[:-1]
-    return listName
-
-li1 = table(li1, list1)
-
-try:
-    li12 = table(li12, list12)
-except:
-    print("")
-
-li2 = table(li2, list2)
-
-try:
-    li22 = table(li22, list22)
-except:
-    print("")
-
-#print(li1)
-#print(li2)
-
-try:
-    list1 = li1 + li12
-except:
-    list1 = li1
-try:
-    list2 = li2 + li22
-except:
-    list2 = li2
-
-print (list1)
-print(list2)
-
-print("Enter Your Language:")
-language = input()
-
-driver = webdriver.Chrome('/Users/samthornton/chromedriver')
-driver.get("https://www.educationperfect.com/app/#/login")
-
-time.sleep(3)
-
-email = driver.find_element(By.ID, 'login-username')
-password = driver.find_element(By.ID, 'login-password')
-logInButton = driver.find_element(By.ID, 'login-submit-button')
-email.send_keys("username")
-password.send_keys("password")
-logInButton.click()
-time.sleep(4)
-print(language)
-driver.get("https://www.educationperfect.com/app/#/dashboard/" + language + "/");
-url = driver.current_url
-print("https://www.educationperfect.com/app/#/dashboard/" + language + "/")
-while url == "https://www.educationperfect.com/app/#/dashboard/" + language + "/":
-    url = driver.current_url
-print("Open Your Task Within The Next 10 Seconds")
-time.sleep(10)
-print("3...")
-time.sleep(1)
-print("2...")
-time.sleep(1)
-print("1...")
-time.sleep(1)
-print("Starting Script")
-time.sleep(2)
-url = driver.current_url
-urlstorage = url
-while url == urlstorage:
-
-    im = ImageGrab.grab()
-    im.save('fullscreen.png')
-    print('saved fullscreen')
-    im = Image.open ('fullscreen.png')
-    im1 = im.crop((left, top, right, bottom))
-    im1.save('fullscreen2.png')
-    print('saved crop')
-    text = pytesseract.image_to_string(Image.open('fullscreen2.png'))
-    print (text)
-    text = text.rstrip('\n\x0c')
-    print (text)
-    if language == 'french':
-        index = list2.index(text)
-        ans = list1[index]
-    else:
-        index = list1.index(text)
-        ans = list2 [index]
-    answer_box = driver.find_element_by_css_selector('#answer-text-container > #answer-text')
-    answer_box.send_keys(ans)
-    driver.find_element_by_id('submit-button').click()
-
+driver = webdriver.Chrome()
+# Opens EP
+driver.get('https://www.educationperfect.com/app/#/login')
+time.sleep(0.01)
+# Logs In
+userinput = driver.find_element_by_xpath("//input[@id='login-username']")
+userinput.send_keys('WHSFRI0011')
+userinput = driver.find_element_by_xpath("//input[@id='login-password']")
+userinput.send_keys("Ram.3649")
+userinput = driver.find_element_by_xpath("//span[normalize-space()='Log in']")
+userinput.click()
+# Waits For You To Open Task
+print("Go To Task")
+while 1 == 1:
+    if 'game?task=' in driver.current_url:
+        break
+while 1 == 1:
+    time.sleep(0.1)
+    textinput = driver.find_element_by_xpath("/html[1]/body[1]/div[1]/div[2]/div[1]/ui-view[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/div[2]/span[2]/span[1]").text
+    current = 0
+    for i in inputList:
+        if textinput in i:
+            new = inputList[current].replace(textinput, '')
+            break;
+        current += 1
+    userinput = driver.find_element_by_xpath("//input[@id='answer-text']")
+    userinput.send_keys(new)
+    userinput = driver.find_element_by_xpath("//button[@id='submit-button']")
+    userinput.click()
